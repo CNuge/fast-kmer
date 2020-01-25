@@ -1,4 +1,4 @@
-#fast-kmer
+# fast-kmer
 ## A command line function for generating dataframes of kmer counts for a series of sequences
 
 As a side project I have recently been learning how to program in C++, and was looking for a way I could apply the skills I've acquired thus far. I decided to [reinvent the wheel](https://www.cbcb.umd.edu/software/jellyfish/) and write a program to generate kmer count data from 
@@ -8,9 +8,7 @@ As a side project I have recently been learning how to program in C++, and was l
 ## How to compile
 In the future I will add a make file, for now you can compile fast_kmer like so.
 
-"""
-g++ fast_kmer.cpp Kmer_seq.cpp -o fast_kmer.o
-"""
+	g++ fast_kmer.cpp Kmer_seq.cpp -o fast_kmer.o
 
 ## How it works
 
@@ -32,10 +30,9 @@ Here is the help menu which shows the arguments that can be passed to the progra
 ## Examples
 
 Count 3mers and 6mers for input file
-"""
-./fast_kmer.o -i data/small_unittest.fasta -k 6 -k 3
-"""
+
+	./fast_kmer.o -i data/small_unittest.fasta -k 6 -k 3
+
 Count 5mers, also calculate gc content, and write to csv instead of default tsv.
-"""
-./fast_kmer.o -i data/small_unittest.fasta -o output_kmers.csv -k 5  --gc
-"""
+
+	./fast_kmer.o -i data/small_unittest.fasta -o output_kmers.csv -k 5  --gc
