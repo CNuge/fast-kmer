@@ -3,8 +3,6 @@
 
 As a side project I have recently been learning how to program in C++, and was looking for a way I could apply the skills I've acquired thus far. I decided to [reinvent the wheel](https://www.cbcb.umd.edu/software/jellyfish/) and write a program to generate kmer count data from 
 
-
-
 ## How to compile
 In the future I will add a make file, for now you can compile fast_kmer like so.
 

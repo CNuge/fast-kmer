@@ -18,8 +18,9 @@ compile:
 g++ fast_kmer.cpp Kmer_seq.cpp -o fast_kmer.o
 
 use:
-./fast_kmer.o -i small_unittest.fasta -k 6 -k 3
-./fast_kmer.o -i small_unittest.fasta -o output_kmers.csv -k 5  --gc
+./fast_kmer.o -i data/small_unittest.fasta -k 6 -k 3
+./fast_kmer.o -i data/small_unittest.fasta -o output_kmers.csv -k 5  --gc
+./fast_kmer.o -i data/small_unittest.fasta -o output_kmers.csv -k 3 --gc
 */
 
 void process_line(string name, string content,
@@ -48,6 +49,7 @@ void process_line(string name, string content,
 	if(calc_gc == true){
 		cout << out_delim << s.gc_content();
 	}
+	s.kmer_map.clear();
 	//endline to complete the entry
 	cout << endl;
 
@@ -161,6 +163,8 @@ int main(int argc, char **argv){
 			if( !name.empty()){
 				//if record, then process
 				process_line(name, content, k_vals, calc_gc, out_delim);
+				name.clear();
+				content.clear();				
 			}
 			// set the name to the current line, less the leading >
 			if( !line.empty()){
@@ -178,6 +182,8 @@ int main(int argc, char **argv){
 	//this block ensures the final line in processed following the loop
 	if ( !name.empty()){
 		process_line(name, content, k_vals, calc_gc, out_delim);
+		name.clear();
+		content.clear();
 	}
 	std::cout.rdbuf(coutbuf);
 	cout << "done!" << endl;

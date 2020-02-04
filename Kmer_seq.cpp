@@ -86,20 +86,62 @@ Kmer_seq &Kmer_seq::build_kmap(){
 	return *this;
 }
 
-//TODO - make sure this is robust to Ns and weird chars 
-// 	   - i.e. they're skipped and not added to the map
-// iterate through the string and count the kmer occurances
-Kmer_seq &Kmer_seq::count(){
-	string k_str; 
 
-	for(int i = 0; i < (dna.size() - k_size); ++i){
-		k_str = dna.substr(i, k_size);
+bool is_nt(char c){
+
+	vector<char> nt = {'A', 'T', 'G', 'C'};
+	for(char x : nt){
+		if(x == c){
+			return true;
+		}
+	}
+	return false;
+}
+
+Kmer_seq &Kmer_seq::count(){
+	string k_str;
+	int non_nt = 0; //this keeps track of the last seen non-nt
+
+	k_str = dna.substr(0, k_size);
+
+	//place the first kmer in the dict	
+	for(int i = 0; i < k_str.size(); i++){
+		if(!is_nt(k_str[i])){
+			non_nt = i;
+		}
+	}
+
+	if(non_nt == 0){
 		kmer_map[k_str]++;
+	}
+
+
+	auto pos = dna.begin()+k_size;
+	auto end = dna.end();
+
+	while(pos < end){
+		//pop pos1 off string, and incoming nt to back
+		k_str.erase(0,1);
+		k_str.push_back(*pos);
+		
+		//check if incoming character is a non-nt, if so put a stop on the dict add until it is out
+		//of the string
+		if(!is_nt(*pos)){
+			non_nt = k_size; // if its an nt, reset hold to max len
+		}else if(non_nt > 0){
+			non_nt--; //decrement if incoming non-nt and currently have a hold on
+		}
+		//only add if there is not an nt in the string
+		if(non_nt == 0){
+			kmer_map[k_str]++;
+		}
+
+		pos++;
+
 	}
 
 	return *this;
 }
-
 
 //return the kmer_map keys - can be used to obtain the header line
 vector<string> Kmer_seq::keys() const {
