@@ -86,7 +86,7 @@ Kmer_seq &Kmer_seq::build_kmap(){
 	return *this;
 }
 
-
+// check if character is a valid nucleotide
 bool is_nt(char c){
 
 	vector<char> nt = {'A', 'T', 'G', 'C'};
